@@ -9,7 +9,7 @@ const DogList = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [dogToDelete, setDogToDelete] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  //const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchDogs();
@@ -17,7 +17,7 @@ const DogList = () => {
 
   const fetchDogs = async () => {
     try {
-      const response = await api.get('/api/dogs');
+      const response = await api.get('/dogs');
       setDogs(response.data);
       setLoading(false);
     } catch (error) {
@@ -28,7 +28,7 @@ const DogList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/api/dogs/${id}`);
+      await api.delete(`/dogs/${id}`);
       setSuccess('Dog deletado com sucesso!');
       setDogToDelete(null);
       fetchDogs();

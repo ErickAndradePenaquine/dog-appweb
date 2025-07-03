@@ -1,21 +1,21 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://127.0.0.1:8000', // URL do seu backend Laravel
+    baseURL: 'http://127.0.0.1:8000/api', //para rodar em localhost
+    //baseURL: 'http://ipmaquina:8000/api', // Para rodar em lan
     headers: {
-        'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',
-    },
-    withCredentials: true // Importante para cookies/sessão
+        'Accept': 'application/json'
+    }
 });
 
-// Interceptor para adicionar o token CSRF em todas as requisições
+// Interceptor para adicionar o token JWT em todas as requisições
 api.interceptors.request.use(config => {
-    const token = document.querySelector('meta[name="csrf-token"]');
+    const token = localStorage.getItem('token');
     if (token) {
-        config.headers['X-CSRF-TOKEN'] = token.getAttribute('content');
+        config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
 });
 
-export default api; 
+export default api;
